@@ -5,15 +5,18 @@ import (
 	"fmt"
 	"net"
 
+	pb "github.com/diogo-esteves/go_grpc/pb"
+
 	"google.golang.org/grpc"
-	"github.com/diogo-esteves/go_grpc/pb/user"
 )
 
-type userServiceServer struct{}
+type userServiceServer struct {
+	pb.UnimplementedUserServiceServer // Embed the UnimplementedServiceServer
+}
 
-func (s *userServiceServer) GetUserById(ctx context.Context, req *user.UserRequest) (*user.User, error) {
+func (s *userServiceServer) GetUserById(ctx context.Context, req *pb.UserRequest) (*pb.User, error) {
 	// Logic to fetch user details from the database
-	user := &user.User{
+	user := &pb.User{
 		Id:   req.UserId,
 		Name: "Diogo Esteves", // Assuming a static name for simplicity
 	}
@@ -28,7 +31,7 @@ func main() {
 	}
 
 	server := grpc.NewServer()
-	user.RegisterUserServiceServer(server, &userServiceServer{})
+	pb.RegisterUserServiceServer(server, &userServiceServer{})
 
 	fmt.Println("gRPC server is running on port 5001")
 	if err := server.Serve(listen); err != nil {
