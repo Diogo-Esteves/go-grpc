@@ -1,6 +1,6 @@
 // user.proto
 syntax = "proto3";
-
+package user;
 option go_package = ".";
 message User {
   int64 id = 1;

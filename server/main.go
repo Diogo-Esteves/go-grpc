@@ -6,8 +6,7 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
-	"github.com/diogo-esteves/go-grpc/pb/user"
-	"github.com/diogo-esteves/go-grpc/pb/userService"
+	"github.com/diogo-esteves/go_grpc/pb/user"
 )
 
 type userServiceServer struct{}
